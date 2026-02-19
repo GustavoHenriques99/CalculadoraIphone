@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.awt.Font;
+
 import javax.swing.*;
 
 public class Calculadora {
@@ -29,6 +31,14 @@ public class Calculadora {
         janela.setResizable(false); // Para que o usuario não arraste a janela
         janela.setLocationRelativeTo(null); // localização da janela no centro da tela, definindo com null, para que a janela seja centralizada na tela do usuário e não considere a posição relativa. Isso é útil para garantir que a janela apareça no centro da tela, independentemente de onde o usuário tenha movido a janela anteriormente.
 
+        
+        //add stillo para o painel e rotulo do display
+        displayJLabel.setBackground(corPreta); //COR DO DISPLAY
+        displayJLabel.setForeground(Color.WHITE); //COR DO TEXTO DO DISPLAY
+        displayJLabel.setFont(new Font("Arial", Font.PLAIN, 80)); //FONTE DO TEXTO DO DISPLAY
+        displayJLabel.setHorizontalAlignment(JLabel.RIGHT); //ALINHAMENTO DO TEXTO DO DISPLAY
+        displayJLabel.setText("")
+        displayJPanel.setBackground(corPreta); //COR DO PAINEL DO DISPLAY
     
     }
 }
