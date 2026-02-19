@@ -1,6 +1,6 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-
 import javax.swing.*;
 
 public class Calculadora {
@@ -13,32 +13,59 @@ public class Calculadora {
     Color corCinzaEscuro = new Color(80, 80, 80); //Cinza escuro
     Color corPreta = new Color(28, 28, 28); //Preto
     Color corLaranja = new Color(255, 149, 0); //Laranja
+
+
+    String[] buttonValues = {
+                            "AC", "+/-", "%", "÷", 
+                            "7", "8", "9", "×", 
+                            "4", "5", "6", "-",
+                            "1", "2", "3", "+",
+                            "0", ".", "√", "="
+    };
+
+    //Separando os símbolos em categorias para facilitar a aplicação de estilos
+    String[] rightSymbols = {"÷", "×", "-", "+", "="};
+    
+    //O topSymbols são os símbolos que ficam no topo da calculadora, e tem um estilo diferente dos outros
+    String[] topSymbols = {"AC", "+/-", "%"}; 
+
     
     //Texto no topo da janela
     JFrame janela = new JFrame("Calculadora");
+    //Elementos do display
+    JLabel displayJLabel = new JLabel();
+    //Visor/ painel do display
+    JPanel displayJPanel = new JPanel();
+    //Painel dos botões
+    JPanel buttonsPanel = new JPanel();
 
-    //>>Criando o display da calculadora
+  Calculadora() {
+    janela.setVisible(true);
+    janela.setSize(largura, altura);
+    janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    janela.setResizable(false);
+    janela.setLocationRelativeTo(null); 
 
-    JLabel displayJLabel = new JLabel(); //Texto do display, alinhado à direita
-    JPanel displayJPanel = new JPanel(); //Painel do display, para organizar o layout do display
+    // ===== DISPLAY =====
+    displayJLabel.setBackground(corPreta);
+    displayJLabel.setForeground(Color.WHITE);
+    displayJLabel.setFont(new Font("Arial", Font.PLAIN, 60));
+    displayJLabel.setHorizontalAlignment(JLabel.RIGHT);
+    displayJLabel.setText("0");
+    displayJLabel.setOpaque(true);
 
-    public void Calculadora() {
-        //Configurações da janela
-        janela.setVisible(true); //Tornando a janela visível
-        janela.setSize(largura, altura); //Definindo o tamanho da janela
-        janela.setLayout(null); //Definindo o layout como null para posicionamento absoluto dos componentes
-        janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Fechar a aplicação quando a janela for fechada
-        janela.setResizable(false); // Para que o usuario não arraste a janela
-        janela.setLocationRelativeTo(null); // localização da janela no centro da tela, definindo com null, para que a janela seja centralizada na tela do usuário e não considere a posição relativa. Isso é útil para garantir que a janela apareça no centro da tela, independentemente de onde o usuário tenha movido a janela anteriormente.
-
-        
-        //add stillo para o painel e rotulo do display
-        displayJLabel.setBackground(corPreta); //COR DO DISPLAY
-        displayJLabel.setForeground(Color.WHITE); //COR DO TEXTO DO DISPLAY
-        displayJLabel.setFont(new Font("Arial", Font.PLAIN, 80)); //FONTE DO TEXTO DO DISPLAY
-        displayJLabel.setHorizontalAlignment(JLabel.RIGHT); //ALINHAMENTO DO TEXTO DO DISPLAY
-        displayJLabel.setText("")
-        displayJPanel.setBackground(corPreta); //COR DO PAINEL DO DISPLAY
+    // ===== PAINEL =====
+    displayJPanel.setLayout(new BorderLayout());
     
+    //displayJPanel.setBackground(corPreta); // 🔥 COR DO PAINEL
+    //displayJPanel.setOpaque(true);
+    //displayJPanel.setBounds(0, 0, largura, 120); // 🔥 posição e tamanho
+
+    displayJPanel.add(displayJLabel); // Adiciona o JLabel ao JPanel
+    janela.add(displayJPanel, BorderLayout.NORTH);
+  
+    
+
+
     }
 }
