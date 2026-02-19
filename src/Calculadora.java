@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 import javax.swing.*;
 
 public class Calculadora {
@@ -39,33 +40,69 @@ public class Calculadora {
     //Painel dos botões
     JPanel buttonsPanel = new JPanel();
 
-  Calculadora() {
-    janela.setVisible(true);
-    janela.setSize(largura, altura);
-    janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    janela.setResizable(false);
-    janela.setLocationRelativeTo(null); 
+    Calculadora() {
+        janela.setVisible(true);
+        janela.setSize(largura, altura);
+        janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        janela.setResizable(false);
+        janela.setLocationRelativeTo(null); 
 
-    // ===== DISPLAY =====
-    displayJLabel.setBackground(corPreta);
-    displayJLabel.setForeground(Color.WHITE);
-    displayJLabel.setFont(new Font("Arial", Font.PLAIN, 60));
-    displayJLabel.setHorizontalAlignment(JLabel.RIGHT);
-    displayJLabel.setText("0");
-    displayJLabel.setOpaque(true);
+        // ===== DISPLAY =====
+        displayJLabel.setBackground(corPreta);
+        displayJLabel.setForeground(Color.WHITE);
+        displayJLabel.setFont(new Font("Arial", Font.PLAIN, 60));
+        displayJLabel.setHorizontalAlignment(JLabel.RIGHT);
+        displayJLabel.setText("0");
+        displayJLabel.setOpaque(true);
 
-    // ===== PAINEL =====
-    displayJPanel.setLayout(new BorderLayout());
+        // ===== PAINEL =====
+        displayJPanel.setLayout(new BorderLayout());
+        
+        //displayJPanel.setBackground(corPreta); 
+        //displayJPanel.setOpaque(true);
+        //displayJPanel.setBounds(0, 0, largura, 120); 
+
+        displayJPanel.add(displayJLabel); // Adiciona o JLabel ao JPanel
+        janela.add(displayJPanel, BorderLayout.NORTH);
     
-    //displayJPanel.setBackground(corPreta); // 🔥 COR DO PAINEL
-    //displayJPanel.setOpaque(true);
-    //displayJPanel.setBounds(0, 0, largura, 120); // 🔥 posição e tamanho
 
-    displayJPanel.add(displayJLabel); // Adiciona o JLabel ao JPanel
-    janela.add(displayJPanel, BorderLayout.NORTH);
-  
-    
+        buttonsPanel.setLayout(new GridLayout(5,4));
+        buttonsPanel.setBackground(corPreta); //Cor de fundo do painel dos botões
+        janela.add(buttonsPanel);
 
+        for (int i = 0; i < buttonValues.length; i++) {
+
+        String buttonValue = buttonValues[i];
+        JButton button = new JButton(buttonValue);
+
+        button.setFont(new Font("Arial", Font.PLAIN, 30));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+
+        // Aplicando estilos
+        if (contains(rightSymbols, buttonValue)) {
+            button.setBackground(corLaranja);
+        } 
+        else if (contains(topSymbols, buttonValue)) {
+            button.setBackground(corCizaClaro);
+            button.setForeground(corPreta);
+        } 
+        else {
+            button.setBackground(corCinzaEscuro);
+        }
+
+        buttonsPanel.add(button); // 🔥 ESSENCIAL
+        }
 
     }
-}
+     // 👇 MÉTODO VEM AQUI
+    private boolean contains(String[] array, String value) {
+        for (String item : array) {
+            if (item.equals(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}     
+
