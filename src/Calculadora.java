@@ -2,7 +2,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 public class Calculadora {
     //Criando janela principal
@@ -78,6 +83,7 @@ public class Calculadora {
         button.setFont(new Font("Arial", Font.PLAIN, 30));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
+        button.setBorder(new LineBorder(corPreta)); // Borda preta para os botões
 
         // Aplicando estilos
         if (contains(rightSymbols, buttonValue)) {
@@ -92,10 +98,32 @@ public class Calculadora {
         }
 
         buttonsPanel.add(button); // 🔥 ESSENCIAL
+
+        button.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e) {
+                JButton button = (JButton) e.getSource();
+                String buttonValue = button.getText();
+
+                if(Array.asList(rightSymbols).contains(buttonValue)) {
+                    // Lógica para os símbolos de operação
+                    System.out.println("Operação: " + buttonValue);
+                } else if (Array.asList(topSymbols).contains(buttonValue)) {
+                    // Lógica para os símbolos do topo
+                    System.out.println("Símbolo do topo: " + buttonValue);
+                } else {
+                    // Lógica para os números e outros símbolos
+                    System.out.println("Número ou outro símbolo: " + buttonValue);
+                }
+                
+            }
+        
         }
 
     }
-     // 👇 MÉTODO VEM AQUI
+
+    }
+     // MÉTODO VEM AQUI
     private boolean contains(String[] array, String value) {
         for (String item : array) {
             if (item.equals(value)) {
