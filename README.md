@@ -4,7 +4,7 @@ Uma calculadora com interface inspirada no iPhone, desenvolvida em Java.
 
 ## Visualização
 
-![Tela da Calculadora](src/img/telacalculadora.jpg)
+![Tela da Calculadora](img/telacalculadora.jpg)
 
 ## Funcionalidades
 
