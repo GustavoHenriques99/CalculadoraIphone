@@ -4,8 +4,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
-
+import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -44,9 +43,14 @@ public class Calculadora {
     JPanel displayJPanel = new JPanel();
     //Painel dos botões
     JPanel buttonsPanel = new JPanel();
+    
+    //A+B, A-B, A*B, A/B
+    String A = "0";
+    String operador = null;
+    String B = null;
 
     Calculadora() {
-        janela.setVisible(true);
+        //janela.setVisible(true);
         janela.setSize(largura, altura);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janela.setResizable(false);
@@ -97,7 +101,7 @@ public class Calculadora {
             button.setBackground(corCinzaEscuro);
         }
 
-        buttonsPanel.add(button); // 🔥 ESSENCIAL
+        buttonsPanel.add(button); //ESSENCIAL
 
         button.addActionListener(new ActionListener() {
             
@@ -105,21 +109,88 @@ public class Calculadora {
                 JButton button = (JButton) e.getSource();
                 String buttonValue = button.getText();
 
-                if(Array.asList(rightSymbols).contains(buttonValue)) {
+                if(Arrays.asList(rightSymbols).contains(buttonValue)) {
                     // Lógica para os símbolos de operação
+                    if (buttonValue.equals("=")){
+                        if(A != null){
+                            B = displayJLabel.getText();
+                            double numA = Double.parseDouble(A);
+                            double numB = Double.parseDouble(B);
+
+                            if(operador.equals("+")){
+                                displayJLabel.setText(removeZeroDecimal(numA+numB));
+                            } 
+                            else if (operador.equals("-")){
+                                displayJLabel.setText(removeZeroDecimal(numA-numB));
+                            } 
+                            else if (operador.equals("×")){
+                                displayJLabel.setText(removeZeroDecimal(numA*numB));
+                            } 
+                            else if (operador.equals("÷")){
+                                displayJLabel.setText(removeZeroDecimal(numA/numB));
+                            }
+                            limpar();
+                        }
+
+                    }
+                    else if ("+-×÷".contains(buttonValue)){
+                        if(operador == null){
+                            A = displayJLabel.getText();                          
+                            displayJLabel.setText("0");
+                            B = "0";
+                        } 
+                        operador = buttonValue;
+                    }
+
                     System.out.println("Operação: " + buttonValue);
-                } else if (Array.asList(topSymbols).contains(buttonValue)) {
+                } else if (Arrays.asList(topSymbols).contains(buttonValue)) {
                     // Lógica para os símbolos do topo
-                    System.out.println("Símbolo do topo: " + buttonValue);
+                    if(buttonValue.equals("AC")){
+                        limpar();
+                        displayJLabel.setText("0");
+                    }
+                    
+                    else if (buttonValue.equals("+/-")){
+                        double numeroTela = Double.parseDouble(displayJLabel.getText());
+                        numeroTela *= -1;
+                        displayJLabel.setText(removeZeroDecimal(numeroTela));
+                    }
+
+
+                    else if (buttonValue.equals("%")){
+                        double numeroTela = Double.parseDouble(displayJLabel.getText());
+                        numeroTela /= 100;
+                        displayJLabel.setText(removeZeroDecimal(numeroTela));
+                    }
+
+
                 } else {
+                    if(buttonValue.equals(".")){
+
+                        if(!displayJLabel.getText().contains(buttonValue)){
+                            displayJLabel.setText(displayJLabel.getText() + buttonValue);
+                        }
+                        
+                    } // Lógica para o ponto decimal
+                    else if("0123456789".contains(buttonValue)){
+                        if(displayJLabel.getText().equals("0")){
+                            displayJLabel.setText(buttonValue);
+                        } else {
+                            displayJLabel.setText(displayJLabel.getText() + buttonValue);
+                        }
+
+                    } else {
+                        
+                    }
                     // Lógica para os números e outros símbolos
                     System.out.println("Número ou outro símbolo: " + buttonValue);
                 }
                 
             }
+            
         
-        }
-
+        });
+        janela.setVisible(true);
     }
 
     }
@@ -131,6 +202,19 @@ public class Calculadora {
             }
         }
         return false;
+    }
+
+    void limpar() {
+        A = "0";
+        operador = null;
+        B = null;
+    }
+
+    String removeZeroDecimal(double numeroTela) {
+        if(numeroTela % 1 == 0){
+            return Integer.toString((int) numeroTela);
+        }
+        return Double.toString(numeroTela);
     }
 }     
 
